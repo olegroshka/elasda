@@ -29,17 +29,20 @@ public final class Client {
         EvictionConfig evictionConfig = new EvictionConfig();
         evictionConfig.setEvictionPolicy(EvictionPolicy.NONE);
         nearCacheConfig.setEvictionConfig(evictionConfig);
+        nearCacheConfig.setLocalUpdatePolicy(NearCacheConfig.LocalUpdatePolicy.CACHE);
+        nearCacheConfig.setCacheLocalEntries(true);
+        nearCacheConfig.setInvalidateOnChange(true);
 
         HashMap<String, NearCacheConfig> nearCacheConfigMap = new HashMap<>();
         nearCacheConfigMap.put("*", nearCacheConfig);
         config.setNearCacheConfigMap(nearCacheConfigMap);
 
-        SerializerConfig productSerializer =
+        SerializerConfig recordSerializer =
                 new SerializerConfig()
                         .setTypeClass(Record.class)
                         .setImplementation(new RecordSerializer());
 
-        config.getSerializationConfig().addSerializerConfig(productSerializer);
+        config.getSerializationConfig().addSerializerConfig(recordSerializer);
 
         return new Client(HazelcastClient.newHazelcastClient(config));
     }

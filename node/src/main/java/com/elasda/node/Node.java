@@ -22,12 +22,12 @@ public class Node {
     public static void main(String[] args) {
         Config config = new Config();
 
-        SerializerConfig productSerializer =
+        SerializerConfig recordSerializer =
                 new SerializerConfig()
                         .setTypeClass(Record.class)
                         .setImplementation(new RecordSerializer());
 
-        config.getSerializationConfig().addSerializerConfig(productSerializer);
+        config.getSerializationConfig().addSerializerConfig(recordSerializer);
 
         HazelcastInstance h = Hazelcast.newHazelcastInstance(config);
         String name = h.getName();
